@@ -14,16 +14,13 @@ for (let i = 0; i < spans.length; i++) {
     dot.setAttribute('data-index', i);
     dots.appendChild(dot);
 }
-
 let dotElements = document.querySelectorAll('.dot');
-
 dotElements[currentIndex].classList.add('active');
 function AutoScroll() {
     degs -= 45;
     currentIndex = (currentIndex + 1) % spans.length;
     updateCarousel();
 }
-
 function updateCarousel() {
     box.style.transform = `perspective(1000px) rotateY(${degs}deg)`;
     dotElements.forEach(dot => dot.classList.remove('active'));
@@ -57,3 +54,33 @@ block.addEventListener('mouseleave', () => {
 window.addEventListener('load', () => {
     interv;
 });
+let startX = 0;
+let startY = 0;
+let distance = 0;
+box.addEventListener('touchstart', handleTouchStart);
+box.addEventListener('touchmove', handleTouchMove);
+function handleTouchStart(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+}
+function handleTouchMove(e) {
+    if (!startX || !startY) return;
+
+    let currentX = e.touches[0].clientX;
+
+    distance = startX - currentX;
+
+    if (Math.abs(distance) > 50) {
+        if (distance > 0) {
+            // Swiped left
+            forward.click();
+        } else {
+            // Swiped right
+            back.click();
+        }
+
+        startX = 0;
+        startY = 0;
+        distance = 0;
+    }
+}

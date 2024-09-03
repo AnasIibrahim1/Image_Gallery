@@ -93,7 +93,7 @@
     }
   
     .box span {
-      transform: rotateY(calc(var(--i) * 45deg)) translateZ(75px);
+      transform: rotateY(calc(var(--i) * 45deg)) translateZ(300px);
     }
   
     .btns button {
